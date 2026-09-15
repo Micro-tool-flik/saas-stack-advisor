@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SaaS Stack Advisor</title>
+
+  <meta
+    name="description"
+    content="Estimate your software stack cost and discover practical alternatives for your business."
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 56px 0 24px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #e9eefc;
+      color: #30489a;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 18px auto 0;
+      color: #5d687d;
+      font-size: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e4e8f0;
+      border-radius: 18px;
+      padding: 28px;
+      margin: 24px 0 40px;
+      box-shadow: 0 12px 35px rgba(20, 35, 70, 0.06);
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #ccd3df;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #4f67d8;
+    }
+
+    .button {
+      width: 100%;
+      padding: 15px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #202d63;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      opacity: 0.92;
+    }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #e6eaf0;
+    }
+
+    .result h2 {
+      margin-top: 0;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      padding: 18px;
+      background: #f7f8fc;
+      border-radius: 12px;
+    }
+
+    .metric small {
+      display: block;
+      color: #68748a;
+      margin-bottom: 5px;
+    }
+
+    .metric strong {
+      font-size: 24px;
+    }
+
+    .recommendation {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #f3f6ff;
+    }
+
+    footer {
+      padding: 20px 0 50px;
+      text-align: center;
+      color: #7a8497;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="container">
+    <div class="badge">Free SaaS Stack Advisor</div>
+
+    <h1>Are you overpaying for your software stack?</h1>
+
+    <p class="subtitle">
+      Enter a few details about your business and get a quick estimate of
+      what your current stack could cost and where you may have room to save.
+    </p>
+  </header>
+
+  <main class="container">
+
+    <div class="card">
+
+      <div class="field">
+        <label for="businessType">Business type</label>
+
+        <select id="businessType">
+          <option value="service">Service business</option>
+          <option value="agency">Agency</option>
+          <option value="ecommerce">E-commerce</option>
+          <option value="startup">Startup</option>
+          <option value="creator">Creator / solo business</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="teamSize">Team size</label>
+
+        <select id="teamSize">
+          <option value="1">1 person</option>
+          <option value="2">2-5 people</option>
+          <option value="5">6-10 people</option>
+          <option value="10">11-25 people</option>
+          <option value="25">26+ people</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="softwareSpend">
+          Approximate monthly software spend (USD)
+        </label>
+
+        <input
+          id="softwareSpend"
+          type="number"
+          min="0"
+          step="1"
+          placeholder="Example: 250"
+        />
+      </div>
+
+      <div class="field">
+        <label for="automationNeed">How important is automation?</label>
+
+        <select id="automationNeed">
+          <option value="low">Not very important</option>
+          <option value="medium">Useful</option>
+          <option value="high">Very important</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="crmNeed">Do you need a CRM?</label>
+
+        <select id="crmNeed">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <button class="button" onclick="analyzeStack()">
+        Analyze My Stack
+      </button>
+
+      <div class="result" id="result">
+
+        <h2>Your preliminary estimate</h2>
+
+        <div class="result-grid">
+
+          <div class="metric">
+            <small>Current monthly spend</small>
+            <strong id="currentSpend">$0</strong>
+          </div>
+
+          <div class="metric">
+            <small>Potential target</small>
+            <strong id="targetSpend">$0</strong>
+          </div>
+
+          <div class="metric">
+            <small>Potential annual difference</small>
+            <strong id="annualSaving">$0</strong>
+          </div>
+
+        </div>
+
+        <div class="recommendation" id="recommendation">
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="container">
+    This is an experimental estimate, not financial advice or a guaranteed
+    savings figure.
+  </footer>
+
+  <script>
+    function analyzeStack() {
+
+      const spend =
+        Number(document.getElementById("softwareSpend").value) || 0;
+
+      const automation =
+        document.getElementById("automationNeed").value;
+
+      const crm =
+        document.getElementById("crmNeed").value;
+
+      let reductionRate = 0.15;
+
+      if (automation === "high") {
+        reductionRate += 0.05;
+      }
+
+      if (crm === "yes") {
+        reductionRate += 0.05;
+      }
+
+      const target =
+        Math.max(0, spend * (1 - reductionRate));
+
+      const annualSaving =
+        Math.max(0, (spend - target) * 12);
+
+      document.getElementById("currentSpend").textContent =
+        "$" + spend.toFixed(0);
+
+      document.getElementById("targetSpend").textContent =
+        "$" + target.toFixed(0);
+
+      document.getElementById("annualSaving").textContent =
+        "$" + annualSaving.toFixed(0);
+
+      let message = "";
+
+      if (spend === 0) {
+
+        message =
+          "<strong>Start with your real software bill.</strong><br>" +
+          "Enter your approximate monthly SaaS spending so the advisor " +
+          "can estimate your potential savings.";
+
+      } else if (spend < 50) {
+
+        message =
+          "<strong>Your software spend is already relatively low.</strong><br>" +
+          "The bigger opportunity may be choosing tools that scale with " +
+          "your business rather than simply cutting cost.";
+
+      } else if (spend < 200) {
+
+        message =
+          "<strong>There may be room to simplify your stack.</strong><br>" +
+          "The next version of this advisor will compare specific tools " +
+          "and show which combinations fit your requirements.";
+
+      } else {
+
+        message =
+          "<strong>Your stack is large enough to justify a detailed review.</strong><br>" +
+          "The next version will compare CRM, automation, email and other " +
+          "software categories and identify potential alternatives.";
+      }
+
+      document.getElementById("recommendation").innerHTML = message;
+
+      document.getElementById("result").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
