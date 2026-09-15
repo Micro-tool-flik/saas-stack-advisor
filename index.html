@@ -214,7 +214,7 @@
 
     .disclosure {
       margin-top: 25px;
-      padding: 16px;
+      padding: 14px 16px;
       border: 1px solid var(--border);
       border-radius: 12px;
       background: #fafbfe;
@@ -282,23 +282,20 @@
     </div>
 
     <div class="field">
-
       <label for="teamSize">
         How many people will use the CRM?
       </label>
 
       <select id="teamSize">
         <option value="1">1</option>
-        <option value="3">2–5</option>
-        <option value="8">6–10</option>
-        <option value="15">11–25</option>
+        <option value="3">2-5</option>
+        <option value="8">6-10</option>
+        <option value="15">11-25</option>
         <option value="30">26+</option>
       </select>
-
     </div>
 
     <div class="field">
-
       <label for="contacts">
         Approximately how many contacts do you have?
       </label>
@@ -314,11 +311,9 @@
       <div class="help">
         Include leads, prospects and customers.
       </div>
-
     </div>
 
     <div class="field">
-
       <label for="leads">
         How many new leads do you receive each month?
       </label>
@@ -330,35 +325,21 @@
         step="10"
         placeholder="Example: 100"
       />
-
     </div>
 
     <div class="field">
-
       <label for="automation">
         How important is automation?
       </label>
 
       <select id="automation">
-
-        <option value="low">
-          Not very important
-        </option>
-
-        <option value="medium">
-          Useful
-        </option>
-
-        <option value="high">
-          Critical
-        </option>
-
+        <option value="low">Not very important</option>
+        <option value="medium">Useful</option>
+        <option value="high">Critical</option>
       </select>
-
     </div>
 
     <div class="field">
-
       <label for="budget">
         Maximum monthly CRM budget (USD)
       </label>
@@ -374,7 +355,6 @@
       <div class="help">
         Approximate amount you're comfortable spending each month.
       </div>
-
     </div>
 
     <button class="button" onclick="analyzeCRM()">
@@ -390,9 +370,9 @@
       <div id="recommendations"></div>
 
       <div class="disclosure">
-  Pricing and features are based on publicly available vendor information
-  and should be rechecked before purchasing.
-</div>
+        Pricing and features are based on publicly available vendor
+        information and should be rechecked before purchasing.
+      </div>
 
     </div>
 
@@ -404,13 +384,10 @@
   SaaS Stack Advisor · Independent CRM comparison project
 </footer>
 
-
 <script>
 
   /*
-    VERIFIED STARTING DATASET
-
-    Sources checked September 2026:
+    STARTING CRM DATASET
 
     Pipedrive:
     Lite: $14/user/month billed annually
@@ -422,22 +399,19 @@
     Pro: $39/user/month billed annually
     Enterprise: $59/user/month billed annually
 
-    HubSpot Customer Platform:
+    HubSpot:
     Free: up to 2 users
     Starter: starts at $7/seat/month
-    Professional and Enterprise are substantially higher-priced tiers
-    and are not treated as simple per-seat estimates here.
 
-    We intentionally avoid pretending that every vendor has identical
-    pricing mechanics.
+    These are starting-price figures and are not a complete
+    quote calculator. Pricing can vary by billing period,
+    plan, seats, add-ons and usage.
   */
-
 
   const crmProducts = [
 
     {
       name: "Freshsales",
-      slug: "freshsales",
 
       plans: {
         free: 0,
@@ -445,8 +419,6 @@
         pro: 39,
         enterprise: 59
       },
-
-      maxSimpleUsers: 3,
 
       strengths: [
         "Strong fit for small teams",
@@ -459,16 +431,13 @@
         "Small businesses that want CRM, communication and automation without a large starting cost.",
 
       tradeoff:
-        "Higher tiers become much more expensive per user.",
+        "Higher tiers become more expensive per user.",
 
       automation: "medium-high"
-
     },
-
 
     {
       name: "Pipedrive",
-      slug: "pipedrive",
 
       plans: {
         lite: 14,
@@ -489,13 +458,10 @@
         "Pricing is per seat, so larger teams can become expensive.",
 
       automation: "high"
-
     },
-
 
     {
       name: "HubSpot",
-      slug: "hubspot",
 
       plans: {
         free: 0,
@@ -506,17 +472,16 @@
         "Broad CRM ecosystem",
         "Marketing and sales capabilities",
         "Free starting option",
-        "Can grow into a larger customer platform"
+        "Can grow into a broader customer platform"
       ],
 
       bestFor:
         "Businesses that want CRM plus a broader marketing and customer platform.",
 
       tradeoff:
-        "Advanced tiers can become dramatically more expensive than entry-level pricing.",
+        "Advanced tiers can become substantially more expensive than entry-level pricing.",
 
       automation: "high"
-
     }
 
   ];
@@ -543,11 +508,10 @@
     let scored = crmProducts.map(product => {
 
       let score = 0;
-
       let reasons = [];
 
 
-      // Team-size fit
+      /* Team-size fit */
 
       if (product.name === "Freshsales" && team <= 5) {
         score += 3;
@@ -555,6 +519,7 @@
       }
 
       if (product.name === "Pipedrive") {
+
         score += 2;
 
         if (team <= 10) {
@@ -564,16 +529,17 @@
       }
 
       if (product.name === "HubSpot") {
+
         score += 2;
 
         if (team <= 2) {
           score += 1;
-          reasons.push("free entry option for very small teams");
+          reasons.push("free entry option for a very small team");
         }
       }
 
 
-      // Automation fit
+      /* Automation */
 
       if (automation === "high") {
 
@@ -585,16 +551,14 @@
           reasons.push("automation is an important part of the fit");
         }
 
-      }
-
-      else if (automation === "medium") {
+      } else if (automation === "medium") {
 
         score += 1;
 
       }
 
 
-      // Lead volume
+      /* Lead volume */
 
       if (leads >= 500) {
 
@@ -603,29 +567,31 @@
           product.name === "HubSpot"
         ) {
           score += 2;
-          reasons.push("better suited to a more active sales operation");
+          reasons.push(
+            "better suited to a more active sales operation"
+          );
         }
-
       }
 
 
-      // Contact volume
+      /* Contact volume */
 
       if (contacts >= 5000) {
 
         if (product.name === "HubSpot") {
           score += 2;
-          reasons.push("broader platform becomes more relevant as operations grow");
+          reasons.push(
+            "a broader platform becomes more relevant as operations grow"
+          );
         }
 
         if (product.name === "Pipedrive") {
           score += 1;
         }
-
       }
 
 
-      // Budget fit
+      /* Budget */
 
       if (budget > 0) {
 
@@ -643,7 +609,6 @@
           if (product.name === "Pipedrive") {
             score += 1;
           }
-
         }
 
 
@@ -656,9 +621,7 @@
           if (product.name === "HubSpot") {
             score += 1;
           }
-
         }
-
       }
 
 
@@ -688,6 +651,7 @@
 
       let priceText = "";
 
+
       if (product.name === "Freshsales") {
 
         if (team <= 3) {
@@ -701,7 +665,6 @@
             `Growth is $${product.plans.growth}/user/month billed annually.`;
 
         }
-
       }
 
 
@@ -715,7 +678,6 @@
 
         priceText =
           `Lite: about $${monthlyLite}/month for ${team} users. Growth: about $${monthlyGrowth}/month. Annual billing basis.`;
-
       }
 
 
@@ -729,10 +691,8 @@
         } else {
 
           priceText =
-            `Starter begins at $${product.plans.starter}/seat/month, while higher HubSpot tiers can be substantially more expensive.`;
-
+            `Starter begins at $${product.plans.starter}/seat/month. Higher HubSpot tiers can be substantially more expensive.`;
         }
-
       }
 
 
@@ -757,7 +717,7 @@
             ${product.bestFor}
           </p>
 
-          <p>
+          <p class="why">
             <strong>Why it matches:</strong>
             ${
               product.reasons.length
