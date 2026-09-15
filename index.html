@@ -4,68 +4,86 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>SaaS Stack Advisor</title>
+  <title>CRM Stack Advisor</title>
 
   <meta
     name="description"
-    content="Estimate your software stack cost and discover practical alternatives for your business."
+    content="Find a CRM that fits your team, contacts, workflow and budget."
   />
 
   <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #68748a;
+      --border: #e1e5ed;
+      --accent: #24346f;
+      --accent-light: #eef2ff;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, Helvetica, sans-serif;
       line-height: 1.5;
     }
 
     .container {
-      width: min(920px, calc(100% - 32px));
-      margin: 0 auto;
+      width: min(960px, calc(100% - 32px));
+      margin: auto;
     }
 
     header {
-      padding: 56px 0 24px;
       text-align: center;
+      padding: 64px 0 30px;
     }
 
     .badge {
       display: inline-block;
-      padding: 6px 12px;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 7px 13px;
       border-radius: 999px;
-      background: #e9eefc;
-      color: #30489a;
       font-size: 13px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(34px, 6vw, 58px);
-      line-height: 1.05;
-      letter-spacing: -1.5px;
+      max-width: 800px;
+      margin-inline: auto;
+      font-size: clamp(36px, 7vw, 62px);
+      line-height: 1.02;
+      letter-spacing: -2px;
     }
 
     .subtitle {
-      max-width: 680px;
-      margin: 18px auto 0;
-      color: #5d687d;
+      max-width: 700px;
+      margin: 20px auto 0;
+      color: var(--muted);
       font-size: 18px;
     }
 
     .card {
-      background: #ffffff;
-      border: 1px solid #e4e8f0;
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 28px;
-      margin: 24px 0 40px;
+      padding: 30px;
       box-shadow: 0 12px 35px rgba(20, 35, 70, 0.06);
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-size: 22px;
     }
 
     .field {
@@ -78,93 +96,105 @@
       margin-bottom: 8px;
     }
 
+    .help {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
     select,
     input {
       width: 100%;
       padding: 13px 14px;
-      border: 1px solid #ccd3df;
+      border: 1px solid #cbd2df;
       border-radius: 10px;
-      background: #fff;
+      background: white;
+      color: var(--text);
       font-size: 16px;
-      outline: none;
     }
 
     select:focus,
     input:focus {
-      border-color: #4f67d8;
+      outline: none;
+      border-color: var(--accent);
     }
 
-    .button {
+    button {
       width: 100%;
-      padding: 15px 18px;
       border: 0;
       border-radius: 10px;
-      background: #202d63;
-      color: #fff;
+      padding: 15px;
+      background: var(--accent);
+      color: white;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    .button:hover {
+    button:hover {
       opacity: 0.92;
     }
 
-    .result {
+    #result {
       display: none;
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid #e6eaf0;
+      margin-top: 30px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
     }
 
-    .result h2 {
-      margin-top: 0;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 18px 0;
-    }
-
-    .metric {
-      padding: 18px;
-      background: #f7f8fc;
-      border-radius: 12px;
-    }
-
-    .metric small {
-      display: block;
-      color: #68748a;
-      margin-bottom: 5px;
-    }
-
-    .metric strong {
-      font-size: 24px;
+    .result-intro {
+      color: var(--muted);
+      margin-top: -8px;
     }
 
     .recommendation {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
       margin-top: 18px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #f3f6ff;
+      background: #fbfcff;
+    }
+
+    .recommendation h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 22px;
     }
 
     footer {
-      padding: 20px 0 50px;
       text-align: center;
-      color: #7a8497;
-      font-size: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 0 0 50px;
     }
 
     @media (max-width: 700px) {
-      .result-grid {
-        grid-template-columns: 1fr;
+      header {
+        padding-top: 42px;
       }
 
       .card {
-        padding: 20px;
+        padding: 22px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
       }
     }
   </style>
@@ -173,19 +203,23 @@
 <body>
 
   <header class="container">
-    <div class="badge">Free SaaS Stack Advisor</div>
+    <div class="badge">Free CRM Decision Tool</div>
 
-    <h1>Are you overpaying for your software stack?</h1>
+    <h1>
+      Which CRM actually fits your business?
+    </h1>
 
     <p class="subtitle">
-      Enter a few details about your business and get a quick estimate of
-      what your current stack could cost and where you may have room to save.
+      Tell us about your team, contacts and sales process.
+      We'll narrow down the options that make the most sense for your situation.
     </p>
   </header>
 
   <main class="container">
 
-    <div class="card">
+    <section class="card">
+
+      <h2 class="section-title">Tell us about your business</h2>
 
       <div class="field">
         <label for="businessType">Business type</label>
@@ -195,168 +229,182 @@
           <option value="agency">Agency</option>
           <option value="ecommerce">E-commerce</option>
           <option value="startup">Startup</option>
-          <option value="creator">Creator / solo business</option>
+          <option value="consulting">Consulting</option>
+          <option value="other">Other</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="teamSize">Team size</label>
+        <label for="teamSize">How many people will use the CRM?</label>
 
         <select id="teamSize">
-          <option value="1">1 person</option>
-          <option value="2">2-5 people</option>
-          <option value="5">6-10 people</option>
-          <option value="10">11-25 people</option>
-          <option value="25">26+ people</option>
+          <option value="1">1</option>
+          <option value="3">2-5</option>
+          <option value="8">6-10</option>
+          <option value="15">11-25</option>
+          <option value="30">26+</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="softwareSpend">
-          Approximate monthly software spend (USD)
-        </label>
+        <label for="contacts">Approximate number of contacts</label>
 
         <input
-          id="softwareSpend"
+          id="contacts"
           type="number"
           min="0"
-          step="1"
-          placeholder="Example: 250"
+          step="100"
+          placeholder="Example: 1000"
+        />
+
+        <div class="help">
+          Leads, prospects and customers you may want to keep in your CRM.
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="leads">Approximate new leads per month</label>
+
+        <input
+          id="leads"
+          type="number"
+          min="0"
+          step="10"
+          placeholder="Example: 100"
         />
       </div>
 
       <div class="field">
-        <label for="automationNeed">How important is automation?</label>
+        <label for="automation">How important are automated follow-ups?</label>
 
-        <select id="automationNeed">
-          <option value="low">Not very important</option>
+        <select id="automation">
+          <option value="low">Not important</option>
           <option value="medium">Useful</option>
           <option value="high">Very important</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="crmNeed">Do you need a CRM?</label>
+        <label for="budget">Maximum monthly CRM budget (USD)</label>
 
-        <select id="crmNeed">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
+        <input
+          id="budget"
+          type="number"
+          min="0"
+          step="5"
+          placeholder="Example: 100"
+        />
       </div>
 
-      <button class="button" onclick="analyzeStack()">
-        Analyze My Stack
+      <button onclick="analyzeCRM()">
+        Find My Best CRM Options
       </button>
 
-      <div class="result" id="result">
+      <div id="result">
 
-        <h2>Your preliminary estimate</h2>
+        <h2>Your preliminary match</h2>
 
-        <div class="result-grid">
+        <p class="result-intro">
+          This first version uses qualification logic only.
+          Verified vendor pricing and feature data will be added next.
+        </p>
 
-          <div class="metric">
-            <small>Current monthly spend</small>
-            <strong id="currentSpend">$0</strong>
-          </div>
+        <div id="recommendations"></div>
 
-          <div class="metric">
-            <small>Potential target</small>
-            <strong id="targetSpend">$0</strong>
-          </div>
-
-          <div class="metric">
-            <small>Potential annual difference</small>
-            <strong id="annualSaving">$0</strong>
-          </div>
-
-        </div>
-
-        <div class="recommendation" id="recommendation">
-        </div>
+        <p class="note">
+          No recommendation is sponsored at this stage.
+          We will clearly identify affiliate relationships when they are added.
+        </p>
 
       </div>
 
-    </div>
+    </section>
 
   </main>
 
   <footer class="container">
-    This is an experimental estimate, not financial advice or a guaranteed
-    savings figure.
+    SaaS Stack Advisor · Independent software comparison project
   </footer>
 
   <script>
-    function analyzeStack() {
 
-      const spend =
-        Number(document.getElementById("softwareSpend").value) || 0;
+    function analyzeCRM() {
+
+      const team =
+        Number(document.getElementById("teamSize").value);
+
+      const contacts =
+        Number(document.getElementById("contacts").value) || 0;
+
+      const leads =
+        Number(document.getElementById("leads").value) || 0;
 
       const automation =
-        document.getElementById("automationNeed").value;
+        document.getElementById("automation").value;
 
-      const crm =
-        document.getElementById("crmNeed").value;
+      const budget =
+        Number(document.getElementById("budget").value) || 0;
 
-      let reductionRate = 0.15;
+      const recommendations = [];
 
-      if (automation === "high") {
-        reductionRate += 0.05;
+      /*
+        Qualification logic only.
+        Real pricing + verified feature matrices will be added later.
+      */
+
+      if (budget > 0 && budget <= 50 && team <= 5) {
+        recommendations.push({
+          name: "Budget-focused CRM",
+          reason:
+            "Your team is small and your budget is tight. Prioritize simple pipeline management and low per-seat costs."
+        });
       }
 
-      if (crm === "yes") {
-        reductionRate += 0.05;
+      if (automation === "high" && team <= 10) {
+        recommendations.push({
+          name: "Automation-focused CRM",
+          reason:
+            "You indicated that automated follow-ups matter. We should prioritize workflows, sequences and integrations."
+        });
       }
 
-      const target =
-        Math.max(0, spend * (1 - reductionRate));
-
-      const annualSaving =
-        Math.max(0, (spend - target) * 12);
-
-      document.getElementById("currentSpend").textContent =
-        "$" + spend.toFixed(0);
-
-      document.getElementById("targetSpend").textContent =
-        "$" + target.toFixed(0);
-
-      document.getElementById("annualSaving").textContent =
-        "$" + annualSaving.toFixed(0);
-
-      let message = "";
-
-      if (spend === 0) {
-
-        message =
-          "<strong>Start with your real software bill.</strong><br>" +
-          "Enter your approximate monthly SaaS spending so the advisor " +
-          "can estimate your potential savings.";
-
-      } else if (spend < 50) {
-
-        message =
-          "<strong>Your software spend is already relatively low.</strong><br>" +
-          "The bigger opportunity may be choosing tools that scale with " +
-          "your business rather than simply cutting cost.";
-
-      } else if (spend < 200) {
-
-        message =
-          "<strong>There may be room to simplify your stack.</strong><br>" +
-          "The next version of this advisor will compare specific tools " +
-          "and show which combinations fit your requirements.";
-
-      } else {
-
-        message =
-          "<strong>Your stack is large enough to justify a detailed review.</strong><br>" +
-          "The next version will compare CRM, automation, email and other " +
-          "software categories and identify potential alternatives.";
+      if (contacts >= 5000) {
+        recommendations.push({
+          name: "Scale-focused CRM",
+          reason:
+            "Your contact volume is large enough that contact limits, pricing tiers and database costs become important."
+        });
       }
 
-      document.getElementById("recommendation").innerHTML = message;
+      if (leads >= 500) {
+        recommendations.push({
+          name: "Lead-management CRM",
+          reason:
+            "Your lead volume is significant. Lead routing, pipeline visibility and automation will matter more than basic contact storage."
+        });
+      }
+
+      if (recommendations.length === 0) {
+        recommendations.push({
+          name: "Balanced CRM",
+          reason:
+            "Your answers don't point to one extreme requirement yet. A balanced CRM comparison across price, pipeline features, contacts and automation is the best next step."
+        });
+      }
+
+      const html = recommendations.map(item => `
+        <div class="recommendation">
+          <div class="tag">Preliminary match</div>
+          <h3>${item.name}</h3>
+          <p>${item.reason}</p>
+        </div>
+      `).join("");
+
+      document.getElementById("recommendations").innerHTML = html;
 
       document.getElementById("result").style.display = "block";
     }
+
   </script>
 
 </body>
